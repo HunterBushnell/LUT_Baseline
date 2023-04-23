@@ -104,7 +104,7 @@ class FeedbackLoop(SimulatorMod):
 	    # Grill, et al. 2016
       # Modified with IMG inclusion and tuned coefficients
         def pressure(fr,v,x):
-            p = 0.7*fr +  7*v - 0.7*x 
+            p = 0.7*fr +  7*v - 1.5*x 
             p = max(p,0.0)
             return p 
 
@@ -252,7 +252,7 @@ class FeedbackLoop(SimulatorMod):
                 for t in spikes:
                     nc.event(t)
                     
-        if self.blad_fr > 10:
+        if self.blad_fr > 10 and vol > 1.0:
             io.log_info("!!!PAG FIRING ACTIVATED!!!")
             self.pag_fr = 15
             
