@@ -97,36 +97,32 @@ class FeedbackLoop(SimulatorMod):
         #### BLADDER EQUATIONS ####    
     # Grill, et al. 2016
         def blad_vol(vol):
-            f = 1.5*vol-1 # f = 1.5*20*vol - 10   #math.exp(48*vol-64.9) + 8
+            f = 1.5*20*vol -10 #-10 #math.exp(48*vol-64.9) + 8
             return f
 
         # Grill function returning pressure in units of cm H20
 	    # Grill, et al. 2016
-      # Modified with IMG inclusion and tuned coefficients
         def pressure(fr,v,x):
-            p = 0.7*fr +  7*v - 0.7*x 
+            p = 0.2*fr +  .5*v - .2*x + 12
             p = max(p,0.0)
             return p 
 
         # Grill function returning bladder afferent firing rate in units of Hz
 	    # Grill, et al. 2016
         def blad_aff_fr(p):
-            #p_mmHg = 0.735559*p
-
-            fr1 = -3.0E-08*p**5 + 1.0E-5*p**4 - 1.5E-03*p**3 + 7.9E-02*p**2 - 0.6*p
+            #fr1 = -3.0E-08*p**5 + 1.0E-5*p**4 - 1.5E-03*p**3 + 7.9E-02*p**2 - 0.6*p
+            p_mmHg = 0.735559*p
             
-            # if p_mmHg < 5:
-            #     fr1 = 0
-            # elif p_mmHg < 10:
-            #     fr1 = 0.3*p_mmHg
-            # elif p_mmHg < 30:
-            #     fr1 = 0.9*p_mmHg - 6
-            # else:
-            #     fr1 = -3.0E-08*p**5 + 1.0E-5*p**4 - 1.5E-03*p**3 + 7.9E-02*p**2 - 0.6*p
+            if p_mmHg < 5:
+                fr1 = 0
+            elif p_mmHg < 10:
+                fr1 = 0.3*p_mmHg
+            elif p_mmHg < 30:
+                fr1 = 0.9*p_mmHg - 6
+            else:
+                fr1 = -3.0E-08*p**5 + 1.0E-5*p**4 - 1.5E-03*p**3 + 7.9E-02*p**2 - 0.6*p
             fr1 = max(fr1,0.0)
             return fr1 # Using scaling factor of 5 here to get the correct firing rate range
-
-
 
     ### STEP 1: Calculate PGN Firing Rate ###
         io.log_info(f'Timestep {block_interval[0]*sim.dt} to {block_interval[1]*sim.dt} ms')
