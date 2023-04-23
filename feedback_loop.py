@@ -104,7 +104,7 @@ class FeedbackLoop(SimulatorMod):
 	    # Grill, et al. 2016
       # Modified with IMG inclusion and tuned coefficients
         def pressure(fr,v,x):
-            p = 0.7*fr +  7*v - 1.5*x 
+            p = 0.7*fr +  7*v - 0.7*x 
             p = max(p,0.0)
             return p 
 
